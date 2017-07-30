@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Pyramid Slide</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+         :root {
+            --max-width: 900px;
+            --font-size: 1rem;
+            --main-color: #AA5588;
+            --secondary-color: #CCCCCC;
+            --font-color: #555;
+            --secondary-font-color: #AA5588;
+        }
+
+        body,
+        html {
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            font-size: var(--font-size);
+            line-height: 1.15;
+            color: var(--font-color);
+            font-family: Courier New, Courier, monospace;
+        }
+
+        h1 {
+            font-size: calc(var(--font-size) * 2);
+            color: #eee;
+        }
+
+        main {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            background: #EEEEEE;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: row wrap;
+            margin: 0;
+            padding: 0;
+            background: var(--main-color);
+        }
+
+        .box {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-flow: column;
+            margin: 1em 0;
+            padding: 0;
+            width: 100%;
+            border: 1px solid var(--main-color);
+            min-height: 300px;
+        }
+
+        .box_header {
+            background: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: row wrap;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        .box .box_control {
+            padding: var(--font-size) .5em;
+            margin: .5rem;
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: center;
+            width: calc(50% - calc(var(--font-size)*2));
+        }
+
+        .box_control p {
+            padding: 0 15px;
+        }
+
+        #pyramid {
+            width: 50%;
+            margin: 0;
+            padding: 15px;
+            color: var(--secondary-font-color);
+        }
+
+        #pyramid p {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1> Pyramid Slide</h1>
+    </header>
+
+    <main>
+        <div class="box">
+            <div class="box_header">
+                <div class="box_control">
+                    <p>Brick Symbol: </p>
+                    <select id="brick">
+                        <option value="#">#</option>
+                        <option value="@">@</option>
+                        <option value="X">X</option>
+                        <option value="$">$</option>
+                    </select>
+                </div>
+                <div class="box_control">
+                    <p>How High?</p>
+                    <input type="range" id="range" min=1 max=20 value=1>
+                    <p id="rangeIndicator">1</p>
+                </div>
+            </div>
+            <div style="text-align: right;" id="pyramid"></div>
+        </div>
+    </main>
+
+    <script>
+        var pyramid = document.querySelector("#pyramid");
+        var rangeIndicator = document.querySelector("#rangeIndicator");
+        var symbol = "#";
+        var height = 1;
+
+        var brick = document.querySelector("#brick");
+        brick.addEventListener('change', function (e) {
+            symbol = this.options[this.selectedIndex].value;
+            makePyramid();
+        });
+
+        var range = document.querySelector("#range");
+        range.addEventListener('input', function (e) {
+            rangeIndicator.innerHTML = this.value;
+            height = this.value;
+            makePyramid();
+        });
+
+
+        function makePyramid() {
+            pyramid.innerHTML = "";
+            for (var i = 1; i <= height; i++) {
+                width = i + 1;
+                row = "";
+                for (var w = 0; w < width; w++) {
+                    row += symbol;
+                }
+                pyramid.innerHTML += "<p>" + row + "</p>";
+            }
+        }
+
+        makePyramid();
+    </script>
+</body>
+
+</html>
